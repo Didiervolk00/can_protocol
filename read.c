@@ -39,27 +39,21 @@ int main()
     printf("content of this file are \n");
  
     do {
-        ch = fgetc(ptr);
-        strncat(str, &ch, 1);
-        ch_count++;
-            
-    } while (ch_count < sizeof(str));
+        for(int i = 0; i < 16; i++){
+            ch = fgetc(ptr);
+            strncat(str, &ch, 1);
+        }
+        // printf("%s\n", str);
+        int len = strlen(str);
+        char hex_str[(len*2)+1];
+        
+        //converting ascii string to hex string
+        string2hexString(str, hex_str);
 
-    // char ascii_str[] = "Hello world!";
-    //declare output string with double size of input string
-    //because each character of input string will be converted
-    //in 2 bytes
-    int len = strlen(str);
-    char hex_str[(len*2)+1];
-    
-    //converting ascii string to hex string
-    string2hexString(str, hex_str);
-    
-    printf("ascii_str: %s\n", str);
-    printf("hex_str: %s\n", hex_str);
-
-    // printf("%s\n", str);
-    // printf("%ld\n", sizeof(str));
+        printf("hex_str: %s\n", hex_str);
+        strcpy(str, "");
+        
+    } while (ch != EOF);
 
     fclose(ptr);
     return 0;
