@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <string.h>
  
-// Driver code
 void string2hexString(char* input, char* output)
 {
     int loop;
@@ -29,6 +28,9 @@ int main()
     char ch;
     char str[16];
     int ch_count = 0;
+    int count = 0;
+    int i, j;
+    int len;
  
     ptr = fopen("test1.hex", "r");
  
@@ -39,22 +41,33 @@ int main()
     printf("content of this file are \n");
  
     do {
-        for(int i = 0; i < 16; i++){
+        //Load in data in strings of 8 bytes
+        for(i = 0; i < 16; i++){
             ch = fgetc(ptr);
             strncat(str, &ch, 1);
         }
-        // printf("%s\n", str);
+
         int len = strlen(str);
         char hex_str[(len*2)+1];
         
         //converting ascii string to hex string
         string2hexString(str, hex_str);
 
+        //Count the occurances of F, FF is empty space in HEX.
+        for(j=0;hex_str[j];j++){
+            if(hex_str[j] == 'F'){
+            count++;
+            }
+        }
+
+        //These need to be removed from the HEX str before being sent.
+        len = strlen(hex_str);
+        hex_str[len-count] = '\0';
+
         printf("hex_str: %s\n", hex_str);
+
         strcpy(str, "");
         
     } while (ch != EOF);
-
-    fclose(ptr);
     return 0;
 }
