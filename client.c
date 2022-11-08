@@ -10,6 +10,24 @@
 #define PORT 8080
 #define SA struct sockaddr
 
+void string2hexString(char* input, char* output)
+{
+    int loop;
+    int i; 
+    
+    i=0;
+    loop=0;
+    
+    while(input[loop] != '\0')
+    {
+        sprintf((char*)(output+i),"%02X", input[loop]);
+        loop+=1;
+        i+=2;
+    }
+    //insert NULL at the end of the output string
+    output[i++] = '\0';
+}
+
 void func(int sockfd)
 {
     char buff[MAX];
@@ -18,8 +36,7 @@ void func(int sockfd)
         bzero(buff, sizeof(buff));
         printf("Enter the string : ");
         n = 0;
-        while ((buff[n++] = getchar()) != '\n')
-            ;
+        buff = 'test';
         write(sockfd, buff, sizeof(buff));
         bzero(buff, sizeof(buff));
         read(sockfd, buff, sizeof(buff));

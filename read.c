@@ -9,14 +9,14 @@ void string2hexString(char* input, char* output)
     int loop;
     int i; 
     
-    i=0;
-    loop=0;
+    i = 0;
+    loop = 0;
     
     while(input[loop] != '\0')
     {
         sprintf((char*)(output+i),"%02X", input[loop]);
-        loop+=1;
-        i+=2;
+        loop += 1;
+        i += 2;
     }
     //insert NULL at the end of the output string
     output[i++] = '\0';
@@ -31,6 +31,7 @@ int main()
     int count = 0;
     int i, j;
     int len;
+    int conversionCount = 0;
  
     ptr = fopen("test1.hex", "r");
  
@@ -48,13 +49,13 @@ int main()
         }
 
         int len = strlen(str);
-        char hex_str[(len*2)+1];
+        char hex_str[(len * 2) + 1];
         
         //converting ascii string to hex string
         string2hexString(str, hex_str);
 
         //Count the occurances of F, FF is empty space in HEX.
-        for(j=0;hex_str[j];j++){
+        for(j = 0; hex_str[j]; j++){
             if(hex_str[j] == 'F'){
             count++;
             }
@@ -67,7 +68,12 @@ int main()
         printf("hex_str: %s\n", hex_str);
 
         strcpy(str, "");
+
+        conversionCount++;
         
     } while (ch != EOF);
+
+    conversionCount = 0;
+
     return 0;
 }
